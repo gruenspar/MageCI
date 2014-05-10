@@ -467,7 +467,7 @@ install_magento ()
             if [[ $WGET != "" ]]; then
                 wget -q --no-clobber -P $download_dir $sql_base_url/$version.sql.gz
             elif [[ $CURL != "" ]]; then
-                curl -o $download_dir/$version.sql.gz $sql_base_url/$version.sql.gz
+                curl -s -o $download_dir/$version.sql.gz $sql_base_url/$version.sql.gz
             fi
 
             if [ $? -eq 0 ]
@@ -514,7 +514,7 @@ install_magento ()
     if [[ $WGET != "" ]]; then
         wget -q --no-clobber -P $download_dir http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
     elif [[ $CURL != "" ]]; then
-        curl -o $download_dir/magento-$version.tar.gz http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
+        curl -s -o $download_dir/magento-$version.tar.gz http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
     fi
 
     check_error_exit;
