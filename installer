@@ -17,11 +17,27 @@
 
 current_dir=$(pwd)
 
-# create bin directory in current dir
-if [ ! -d "$current_dir/bin" ]
-then
-  mkdir -p $current_dir/bin
+# Check if wget or curl exits
+WGET=$(command -v wget)
+CURL=$(command -v curl)
+if [[ $WGET = "" && $CURL = "" ]]; then
+    echo >&2 'Neither wget nor curl command found. Please install wget or curl and re-run command.';
+    exit 1;
 fi
 
-wget -q -O $current_dir/bin/mage-ci https://raw.github.com/EcomDev/MageCI/master/bin/mage-ci --no-check-certificate
+# Create bin directory in current dir
+if [ ! -d "$current_dir/bin" ]
+then
+    mkdir -p $current_dir/bin
+fi
+
+# Download the MageCI binary
+if [[ $WGET != "" ]]; then
+    wget -q -O $current_dir/bin/mage-ci https://raw.githubusercontent.com/firegento/MageCI/master/bin/mage-ci --no-check-certificate
+elif [[ $CURL != "" ]]; then
+    curl -s -o $current_dir/bin/mage-ci https://raw.githubusercontent.com/firegento/MageCI/master/bin/mage-ci
+fi
+
 chmod +x $current_dir/bin/mage-ci
+
+echo "Done. MageCI successfully installed in $current_dir/bin/mage-ci"
