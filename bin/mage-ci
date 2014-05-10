@@ -20,6 +20,7 @@
 action=$1
 shift;
 
+
 # Identify which PHP executable to run
 if [ "$PHP" = "" ]
 then
@@ -27,6 +28,16 @@ then
 else
   php_bin=$PHP
 fi
+
+
+# Check if wget or curl exits
+WGET=$(command -v wget)
+CURL=$(command -v curl)
+if [[ $WGET = "" && $CURL = "" ]]; then
+    echo >&2 'Neither wget nor curl command found. Please install wget or curl and re-run command.';
+    exit 1;
+fi
+
 
 # Build a realpath function for Mac OS X
 OS=`uname -s`
@@ -431,7 +442,7 @@ install_magento ()
 
     if [ ! -d "$download_dir" ]
     then
-        mkdir -p $magento_dir
+        mkdir -p $download_dir
         check_error_exit
     fi
 
@@ -452,7 +463,12 @@ install_magento ()
         if [[ $sql_base_url =~ ^https?\:// ]]
         then
             echo "${MAGECIF[2]}Trying download SQL dump from url: $sql_base_url/$version.sql.gz"
-            wget -q --no-clobber -P $download_dir $sql_base_url/$version.sql.gz
+
+            if [[ $WGET != "" ]]; then
+                wget -q --no-clobber -P $download_dir $sql_base_url/$version.sql.gz
+            elif [[ $CURL != "" ]]; then
+                curl -o $download_dir/$version.sql.gz $sql_base_url/$version.sql.gz
+            fi
 
             if [ $? -eq 0 ]
             then
@@ -495,7 +511,12 @@ install_magento ()
     fi
 
     echo "${MAGECIF[2]}Downloading Magento from URL: http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz${MAGECIF[0]}"
-    wget -q --no-clobber -P $download_dir http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
+    if [[ $WGET != "" ]]; then
+        wget -q --no-clobber -P $download_dir http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
+    elif [[ $CURL != "" ]]; then
+        curl -o $download_dir/magento-$version.tar.gz http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
+    fi
+
     check_error_exit;
 
     echo "${MAGECIF[2]}Unpacking magento installment...${MAGECIF[0]}"
