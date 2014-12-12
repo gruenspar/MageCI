@@ -132,7 +132,7 @@ ${MAGECIF[4]}$ mage-ci install-multiple <directory> <prefix> <version1> ... <ver
       -r  <sql_base_url>  SQL dumps repository url for a particular Magento version (<sql_base_url>/<version>.sql.gz)
 
 ${MAGECIF[4]}$ mage-ci db-dump <directory> <prefix> <version1> ... <versionN> <OPTIONS>${MAGECIF[0]}
-    Creates Magento database dump file at <directory> directory with name <file_prefix><version>.sql.gz, the data dunped database is <prefix>_<version>
+    Creates Magento database dump file at <directory> directory with name <file_prefix><version>.sql.gz, the data dumped database is <prefix>_<version>
       -u  <db_user>       DB Username
       -p  <db_pass>       DB Password
       -s  <file_prefix>   sql file prefix
