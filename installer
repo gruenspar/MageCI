@@ -33,9 +33,9 @@ fi
 
 # Download the MageCI binary
 if [[ $WGET != "" ]]; then
-    wget -q -O $current_dir/bin/mage-ci https://raw.githubusercontent.com/firegento/MageCI/master/bin/mage-ci --no-check-certificate
+    wget -q -O $current_dir/bin/mage-ci https://raw.githubusercontent.com/gruenspar/MageCI/master/bin/mage-ci --no-check-certificate
 elif [[ $CURL != "" ]]; then
-    curl -s -o $current_dir/bin/mage-ci https://raw.githubusercontent.com/firegento/MageCI/master/bin/mage-ci
+    curl -s -o $current_dir/bin/mage-ci https://raw.githubusercontent.com/gruenspar/MageCI/master/bin/mage-ci
 fi
 
 chmod +x $current_dir/bin/mage-ci
