@@ -510,17 +510,17 @@ install_magento ()
         uninstall_magento "$magento_dir"
     fi
 
-    echo "${MAGECIF[2]}Downloading Magento from URL: http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz${MAGECIF[0]}"
+    echo "${MAGECIF[2]}Downloading Magento from URL: https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz${MAGECIF[0]}"
     if [[ $WGET != "" ]]; then
-        wget -q --no-clobber -P "$download_dir" http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz
+        wget -q --no-clobber -P "$download_dir" https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz
     elif [[ $CURL != "" ]]; then
-        curl -s -o "$download_dir/magento-$version.tar.gz" "http://www.magentocommerce.com/downloads/assets/$version/magento-$version.tar.gz"
+        curl -s -o "$download_dir/$version.tar.gz https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz"
     fi
 
     check_error_exit;
 
     echo "${MAGECIF[2]}Unpacking magento installment...${MAGECIF[0]}"
-    tar -zxf "$download_dir/magento-$version.tar.gz" -C "$magento_dir" --strip=1 magento
+    tar -zxvf "$download_dir/$version.tar.gz" -C "$magento_dir" --strip=1 magento-mirror-$version
 
     # Special case for PHP5.4 with installation process
     echo "${MAGECIF[2]}Applying pdo_mysql check fix...${MAGECIF[0]}"
