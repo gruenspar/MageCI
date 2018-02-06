@@ -514,7 +514,7 @@ install_magento ()
     if [[ $WGET != "" ]]; then
         wget -q --no-clobber -P "$download_dir" https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz
     elif [[ $CURL != "" ]]; then
-        curl -s -o "$download_dir/$version.tar.gz https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz"
+        curl -s -o "$download_dir/$version.tar.gz" "https://github.com/OpenMage/magento-mirror/archive/$version.tar.gz"
     fi
 
     check_error_exit;
